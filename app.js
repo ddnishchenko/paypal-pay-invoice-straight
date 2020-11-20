@@ -33,8 +33,6 @@ app.use(sassMiddleware({
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/models', modelsRouter);
 app.use('/invoices', invoicesRouter);
 
 // catch 404 and forward to error handler

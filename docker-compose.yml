@@ -10,7 +10,7 @@ services:
         working_dir: /home/node/app
         
         volumes:
-            - ./node:/home/node/app
+            - ./:/home/node/app
         networks:
             - front
         tty: true

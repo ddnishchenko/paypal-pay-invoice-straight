@@ -25,16 +25,19 @@ router.get('/:invoice', async function(req, res, next) {
             let uri;
             pages = await browser.pages();
             console.log('pages', pages.length);
+            pages.forEach(page => {
+                console.log(page.url());
+            })
             const paypalWindow = pages[pages.length - 1];
-            await paypalWindow.waitForTimeout(3000);
+            // await paypalWindow.waitForTimeout(3000);
             const cnt = await paypalWindow.content();
             uri = paypalWindow.url();
             await paypalWindow.waitForSelector('.button.secondary', {timeout: 1000 * 60});
             await paypalWindow.click('.button.secondary');
-            await paypalWindow.waitForTimeout(3000);
+            // await paypalWindow.waitForTimeout(3000);
             // await paypalWindow.waitForSelector('#countrySelector', {timeout: 1000 * 60});
             // await paypalWindow.select('#countrySelector', 'CA');
-            await paypalWindow.waitForTimeout(3000);
+            // await paypalWindow.waitForTimeout(3000);
             uri = paypalWindow.url();
             console.log(uri);
             const parsedUrl = url.parse(uri, true);

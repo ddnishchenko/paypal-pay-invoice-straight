@@ -6,6 +6,7 @@ const puppeteer = require('puppeteer');
 router.get('/:invoice', async function(req, res, next) {
     
     const invoice = req.params.invoice;
+    const isRedirect = req.query.redirect === 'true';
     console.log(invoice);
     const browser = await puppeteer.launch({
         args: [
@@ -42,7 +43,12 @@ router.get('/:invoice', async function(req, res, next) {
             console.log(uri);
             const parsedUrl = url.parse(uri, true);
             const finalUri = `https://www.paypal.com/webapps/xoonboarding?token=${parsedUrl.query.token}&useraction=commit&country.x=CA&locale.x=en_US#/checkout/guest`;
-            res.redirect(finalUri);
+            if (isRedirect) {
+                res.redirect(finalUri);
+            } else {
+                res.json({url: finalUri});
+            }
+            
         } catch (e) {
             res.json({error: e.message});
         }
